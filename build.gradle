@@ -18,11 +18,18 @@ repositories {
     // Use jcenter for resolving dependencies.
     // You can declare any Maven/Ivy/file repository here.
     jcenter()
+    mavencentral()
+    maven { url 'https://jitpack.io' }
 }
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 dependencies {
     // This dependency is used by the application.
     implementation 'com.google.guava:guava:28.0-jre'
+    implementation 'com.github.toolbox4minecraft:amidst:v4.3'
+    implementation 'org.takes:takes:1.11.3'
 
     // Use JUnit test framework
     testImplementation 'junit:junit:4.12'

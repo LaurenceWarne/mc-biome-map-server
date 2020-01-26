@@ -3,12 +3,41 @@
  */
 package laurencewarne.mcbiomemapserver;
 
+import java.util.function.Consumer;
+
+import amidst.mojangapi.file.MinecraftInstallation;
+import amidst.mojangapi.minecraftinterface.MinecraftInterface;
+import amidst.mojangapi.minecraftinterface.MinecraftInterfaceCreationException;
+import amidst.mojangapi.minecraftinterface.MinecraftInterfaceException;
+import amidst.mojangapi.minecraftinterface.MinecraftInterfaces;
+import amidst.mojangapi.world.World;
+import amidst.mojangapi.world.WorldBuilder;
+import amidst.mojangapi.world.WorldOptions;
+import amidst.mojangapi.world.WorldSeed;
+import amidst.mojangapi.world.WorldType;
+
 public class App {
-    public String getGreeting() {
-        return "Hello world.";
-    }
 
     public static void main(String[] args) {
-        System.out.println(new App().getGreeting());
+	WorldBuilder mcWorldBuilder = WorldBuilder.createSilentPlayerless();
+	MinecraftInstallation mcInstallation = MinecraftInstallation.
+	    newLocalMinecraftInstallation();
+	Consumer<World> onDispose = world -> {};
+	WorldOptions worldOptions = new WorldOptions(
+	    WorldSeed.random(), WorldType.DEFAULT
+	);
+	MinecraftInterface mcInterface = null;
+	try {
+		mcInterface = MinecraftInterfaces.fromLocalProfile(null);
+	} catch (MinecraftInterfaceCreationException e1) {
+		e1.printStackTrace();
+	}
+	World mcWorld = null;
+	try {
+	    mcWorld = mcWorldBuilder.from(mcInterface, onDispose, worldOptions);
+	} catch (MinecraftInterfaceException e) {
+	    e.printStackTrace();
+	}
+	mcWorld.getBiomeDataOracle().getBiomeAtMiddleOfChunk(0, 0);
     }
 }
