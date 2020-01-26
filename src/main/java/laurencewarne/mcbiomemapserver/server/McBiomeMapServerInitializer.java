@@ -8,16 +8,12 @@ import org.takes.http.FtBasic;
 
 public class McBiomeMapServerInitializer {
 
-    public void initServer() {
-	try {
-	    new FtBasic(
-		new TkFork(
-		    new FkRegex("/biomeAt", "The biome is: ?"),
-		    new FkRegex("/", "Hello world")
-		)
-	    );
-	} catch (IOException e) {
-	    e.printStackTrace();
-	}
+    public FtBasic initServer() throws IOException {
+	return new FtBasic(
+	    new TkFork(
+		new FkRegex("/biome", "The biome is: ?"),
+		new FkRegex("/", "Hello world")
+	    ), 8080
+	);
     }    
 }
