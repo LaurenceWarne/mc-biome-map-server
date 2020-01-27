@@ -212,6 +212,7 @@ gradle-app.setting
 /ios/build/
 /ios-moe/build/
 /bin/
+lombok.config
 
 ## OS Specific
 .DS_Store

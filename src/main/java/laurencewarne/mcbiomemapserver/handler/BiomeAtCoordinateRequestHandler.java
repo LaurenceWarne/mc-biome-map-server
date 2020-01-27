@@ -11,6 +11,7 @@ import org.takes.misc.Href;
 import org.takes.rq.RqHref;
 import org.takes.rs.RsHtml;
 
+import amidst.mojangapi.world.World;
 import laurencewarne.mcbiomemapserver.minecraft.WorldProvider;
 import lombok.Getter;
 import lombok.NonNull;
@@ -28,10 +29,15 @@ public class BiomeAtCoordinateRequestHandler implements Take {
     private WorldProvider WorldProvider;
 
     @Override
-    public Response act(final Request request) throws IOException {
+    public Response act(@NonNull final Request request) throws IOException {
 	final Href href = new RqHref.Base(request).href();
 	final Iterable<String> chunkXInfo = href.param("chunkX");
 	final Iterable<String> chunkYInfo = href.param("chunkY");
+	try {
+	    World world = WorldProvider.getWorld(0);
+	} catch (Exception e) {
+	    e.printStackTrace();
+	}
 	return new RsHtml(
 	    "Chunk X information: " + Iterables.toString(chunkXInfo) + ", " +
 	    "Chunk Y information: " + Iterables.toString(chunkYInfo)
