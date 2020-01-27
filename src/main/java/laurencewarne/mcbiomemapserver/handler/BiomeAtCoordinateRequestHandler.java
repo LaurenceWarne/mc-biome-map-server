@@ -1,6 +1,7 @@
 package laurencewarne.mcbiomemapserver.handler;
 
 import java.io.IOException;
+import java.util.NoSuchElementException;
 
 import com.google.common.collect.Iterables;
 
@@ -31,17 +32,23 @@ public class BiomeAtCoordinateRequestHandler implements Take {
     @Override
     public Response act(@NonNull final Request request) throws IOException {
 	final Href href = new RqHref.Base(request).href();
-	final Iterable<String> chunkXInfo = href.param("chunkX");
-	final Iterable<String> chunkYInfo = href.param("chunkY");
+	String chunkXStart, chunkYStart, chunkXEnd, chunkYEnd;
+	try {
+	    chunkXStart = Iterables.getOnlyElement(href.param("chunkStartX"));
+	    chunkYStart = Iterables.getOnlyElement(href.param("chunkStartY"));
+	    chunkXEnd = Iterables.getOnlyElement(href.param("chunkEndX"));
+	    chunkYEnd = Iterables.getOnlyElement(href.param("chunkEndY"));
+	}
+	catch (NoSuchElementException e) {
+	    chunkXStart = chunkYStart = chunkXEnd = chunkYEnd = "0";
+	}
 	try {
 	    World world = WorldProvider.getWorld(0);
+	    return new RsHtml(world.getGeneratorOptions() + " " + world.getBiomeDataOracle().getBiomeAtMiddleOfChunk(0, 0).getName());
+	    
 	} catch (Exception e) {
-	    e.printStackTrace();
+	    return new RsHtml(e.getMessage());
 	}
-	return new RsHtml(
-	    "Chunk X information: " + Iterables.toString(chunkXInfo) + ", " +
-	    "Chunk Y information: " + Iterables.toString(chunkYInfo)
-	);
     }
     
 }
