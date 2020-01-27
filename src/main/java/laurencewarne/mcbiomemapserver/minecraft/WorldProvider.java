@@ -15,10 +15,12 @@ import amidst.mojangapi.world.WorldBuilder;
 import amidst.mojangapi.world.WorldOptions;
 import amidst.mojangapi.world.WorldSeed;
 import amidst.mojangapi.world.WorldType;
+import lombok.NonNull;
 
 public class WorldProvider {
 
-    private Map<Integer, World> mcWorldLookup = new HashMap<>();
+    @NonNull
+    private final Map<Integer, World> mcWorldLookup = new HashMap<>();
  
     public World getWorld(int seed) {
 	WorldBuilder mcWorldBuilder = WorldBuilder.createSilentPlayerless();
