@@ -28,6 +28,7 @@ dependencies {
     implementation 'com.google.guava:guava:28.0-jre'
     implementation 'com.github.toolbox4minecraft:amidst:v4.3'
     implementation 'org.takes:takes:1.11.3'
+    implementation 'com.jcabi.incubator:xembly:0.22'
 
     // Use JUnit test framework
     testImplementation 'junit:junit:4.12'

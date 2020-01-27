@@ -20,8 +20,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 /**
- * Processes a request for the biome type at a chunk coordinate and sends the found
- * biome type.
+ * Processes a request for the biome type at a set of chunk coordinates and sends the
+ * found biome types.
  */
 @RequiredArgsConstructor
 public class BiomeAtCoordinateRequestHandler implements Take {
