@@ -13,7 +13,7 @@ import laurencewarne.mcbiomemapserver.minecraft.WorldProvider;
 public class McBiomeMapServerInitializer {
 
     public FtBasic initServer() throws IOException {
-	final WorldProvider worldProvider = new WorldProvider();
+	final WorldProvider worldProvider = new WorldProvider("~/.minecraft");
 	final Take biomeCoordHandler = new BiomeAtCoordinateRequestHandler(worldProvider);
 	return new FtBasic(
 	    new TkFork(

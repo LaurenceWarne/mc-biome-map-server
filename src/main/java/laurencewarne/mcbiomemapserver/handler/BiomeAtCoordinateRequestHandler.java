@@ -43,7 +43,7 @@ public class BiomeAtCoordinateRequestHandler implements Take {
 	    chunkXStart = chunkYStart = chunkXEnd = chunkYEnd = "0";
 	}
 	try {
-	    World world = WorldProvider.getWorld(0);
+	    World world = WorldProvider.getWorld("1.13.2", 0);
 	    return new RsHtml(world.getGeneratorOptions() + " " + world.getBiomeDataOracle().getBiomeAtMiddleOfChunk(0, 0).getName());
 	    
 	} catch (Exception e) {

@@ -11,7 +11,7 @@ import laurencewarne.mcbiomemapserver.server.McBiomeMapServerInitializer;
 
 public class App {
 
-    // Pass in minecraft install directory and optionally a launch profile
+    // Pass minecraft install directory in cmdline args
     public static void main(String[] args) {
 	try {
 	    new McBiomeMapServerInitializer().initServer().start(Exit.NEVER);;
