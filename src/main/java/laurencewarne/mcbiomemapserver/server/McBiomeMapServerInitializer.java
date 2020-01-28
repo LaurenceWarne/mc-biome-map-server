@@ -9,11 +9,12 @@ import org.takes.http.FtBasic;
 
 import laurencewarne.mcbiomemapserver.handler.BiomeAtCoordinateRequestHandler;
 import laurencewarne.mcbiomemapserver.minecraft.WorldProvider;
+import lombok.NonNull;
 
 public class McBiomeMapServerInitializer {
 
-    public FtBasic initServer() throws IOException {
-	final WorldProvider worldProvider = new WorldProvider("~/.minecraft");
+    public FtBasic initServer(@NonNull final String mcInstallLocation) throws IOException {
+	final WorldProvider worldProvider = new WorldProvider(mcInstallLocation);
 	final Take biomeCoordHandler = new BiomeAtCoordinateRequestHandler(worldProvider);
 	return new FtBasic(
 	    new TkFork(

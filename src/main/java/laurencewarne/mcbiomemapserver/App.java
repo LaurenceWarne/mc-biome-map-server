@@ -13,8 +13,12 @@ public class App {
 
     // Pass minecraft install directory in cmdline args
     public static void main(String[] args) {
+	final String mcInstallLocation = (args.length > 0)? args[0] :
+	    System.getProperty("user.home") + "/.minecraft";
 	try {
-	    new McBiomeMapServerInitializer().initServer().start(Exit.NEVER);;
+	    new McBiomeMapServerInitializer()
+		.initServer(mcInstallLocation)
+		.start(Exit.NEVER);;
 	} catch (IOException e) {
 	    e.printStackTrace();
 	}
