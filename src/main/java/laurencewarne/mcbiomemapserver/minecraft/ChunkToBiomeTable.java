@@ -25,10 +25,10 @@ public class ChunkToBiomeTable extends ForwardingTable<Integer, Integer, Biome> 
 	directives.add("root");
 	for (Cell<Integer, Integer, Biome> chunk : delegate.cellSet()) {
 	    directives.add("chunk");
-	    directives.add("x").set(chunk.getColumnKey());
+	    directives.add("x").set(chunk.getColumnKey()).up();
 	    directives.add("y").set(chunk.getRowKey()).up();
-	    directives.add("biome").set(chunk.getValue().getName()).up()
-		.attr("id", chunk.getValue().getIndex());
+	    directives.add("biome").set(chunk.getValue().getName())
+		.attr("id", chunk.getValue().getIndex()).up().up();
 	}
 	return new Xembler(directives);
     }
