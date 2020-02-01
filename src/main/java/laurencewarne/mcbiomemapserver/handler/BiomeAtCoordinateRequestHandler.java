@@ -17,24 +17,19 @@ import org.xembly.Directives;
 
 import amidst.mojangapi.world.World;
 import laurencewarne.mcbiomemapserver.minecraft.ChunkToBiomeTable;
-import laurencewarne.mcbiomemapserver.minecraft.WorldProvider;
-import lombok.Getter;
 import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 
 /**
  * Processes a request for the biome type at a set of chunk coordinates and sends the
  * found biome types.
  */
-@RequiredArgsConstructor
-public class BiomeAtCoordinateRequestHandler implements Take {
+public abstract class BiomeAtCoordinateRequestHandler implements Take {
 
-    @NonNull @Getter @Setter
-    private WorldProvider WorldProvider;
     private XeDirectives errorDirective = new XeDirectives(
 	new Directives().add("root").add("error")
     );
+
+    protected abstract World getWorld( @NonNull final Href href );
 
     @Override
     public Response act(@NonNull final Request request) throws IOException {
@@ -53,7 +48,7 @@ public class BiomeAtCoordinateRequestHandler implements Take {
 	    return new RsXembly(errorDirective);	    
 	}
 	try {
-	    World world = WorldProvider.getWorld("1.13.2", 0);
+	    World world = getWorld(href);
 	    final ChunkToBiomeTable table = new ChunkToBiomeTable();
 	    for (int i = chunkXStart; i <= chunkXEnd; i++){
 		for (int j = chunkYStart; j <= chunkYEnd; j++){
