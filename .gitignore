@@ -213,6 +213,7 @@ gradle-app.setting
 /ios-moe/build/
 /bin/
 lombok.config
+/logs/*
 
 ## OS Specific
 .DS_Store

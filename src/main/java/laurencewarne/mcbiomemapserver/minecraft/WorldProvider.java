@@ -1,9 +1,10 @@
 package laurencewarne.mcbiomemapserver.minecraft;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.function.Consumer;
+
+import com.google.common.collect.HashBasedTable;
+import com.google.common.collect.Table;
 
 import amidst.mojangapi.file.DotMinecraftDirectoryNotFoundException;
 import amidst.mojangapi.file.LauncherProfile;
@@ -30,7 +31,7 @@ public class WorldProvider {
     private final MinecraftInstallation mcInstallation;
     /**Acts as a cache so we don't have to keep reloading the same mc world.*/
     @NonNull
-    private final Map<Integer, World> mcWorldLookup = new HashMap<>();
+    private final Table<Integer, String,  World> mcWorldLookup = HashBasedTable.create();
 
     /**
      * Create a new WorldProvider object using the minecraft installation at the
@@ -52,18 +53,22 @@ public class WorldProvider {
 	       FormatException,
 	       IOException
     {
-	final WorldBuilder mcWorldBuilder = WorldBuilder.createSilentPlayerless();
-	final LauncherProfile launcherProfile = mcInstallation.newLauncherProfile(
-	    launcherProfileName
-	);
-	final MinecraftInterface mcInterface = MinecraftInterfaces.fromLocalProfile(
-	    launcherProfile
-	);
-	final Consumer<World> onDispose = world -> {};
-	final WorldOptions worldOptions = new WorldOptions(
-	    WorldSeed.random(), WorldType.DEFAULT
-	);	
-	final World mcWorld = mcWorldBuilder.from(mcInterface, onDispose, worldOptions);
-	return mcWorld;
+	if (!mcWorldLookup.contains(seed, launcherProfileName)) {
+	    final WorldBuilder mcWorldBuilder = WorldBuilder.createSilentPlayerless();
+	    final LauncherProfile launcherProfile = mcInstallation.newLauncherProfile(
+		launcherProfileName
+	    );
+	    final MinecraftInterface mcInterface = MinecraftInterfaces.fromLocalProfile(
+		launcherProfile
+	    );
+	    final Consumer<World> onDispose = world -> {};
+	    final WorldOptions worldOptions = new WorldOptions(
+		WorldSeed.random(), WorldType.DEFAULT
+	    );	
+	    final World mcWorld = mcWorldBuilder.from(mcInterface, onDispose, worldOptions);
+	    mcWorldLookup.put(seed, launcherProfileName, mcWorld);
+	}
+	return mcWorldLookup.get(seed, launcherProfileName);
+
     }
 }

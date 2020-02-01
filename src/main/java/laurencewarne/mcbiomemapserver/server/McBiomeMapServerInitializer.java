@@ -15,10 +15,10 @@ public class McBiomeMapServerInitializer {
 
     public FtBasic initServer(@NonNull final String mcInstallLocation) throws IOException {
 	final WorldProvider worldProvider = new WorldProvider(mcInstallLocation);
-	final Take biomeSeededHandler = new SeededBiomeHandler(worldProvider);
+	final Take seededBiomeHandler = new SeededBiomeHandler(worldProvider);
 	return new FtBasic(
 	    new TkFork(
-		new FkRegex("/biome/seed", biomeSeededHandler),
+		new FkRegex("/biome/seed", seededBiomeHandler),
 		new FkRegex("/", "Hello world")
 	    ), 8080
 	);
