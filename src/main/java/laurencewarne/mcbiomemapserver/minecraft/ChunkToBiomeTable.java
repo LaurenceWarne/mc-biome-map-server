@@ -4,8 +4,8 @@ import com.google.common.collect.ForwardingTable;
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
 
+import org.takes.rs.xe.XeDirectives;
 import org.xembly.Directives;
-import org.xembly.Xembler;
 
 import amidst.mojangapi.world.biome.Biome;
 import lombok.NonNull;
@@ -20,7 +20,7 @@ public class ChunkToBiomeTable extends ForwardingTable<Integer, Integer, Biome> 
 	return delegate;
     }
 
-    public Xembler toXML() {
+    public XeDirectives toXML() {
 	final Directives directives = new Directives();
 	directives.add("root");
 	for (Cell<Integer, Integer, Biome> chunk : delegate.cellSet()) {
@@ -30,6 +30,6 @@ public class ChunkToBiomeTable extends ForwardingTable<Integer, Integer, Biome> 
 	    directives.add("biome").set(chunk.getValue().getName())
 		.attr("id", chunk.getValue().getIndex()).up().up();
 	}
-	return new Xembler(directives);
+	return new XeDirectives(directives);
     }
 }
