@@ -60,7 +60,5 @@ public abstract class BiomeAtCoordinateRequestHandler implements Take {
 	} catch (Exception e) {
 	    return new RsHtml(e.getMessage());
 	}
-
     }
-    
 }

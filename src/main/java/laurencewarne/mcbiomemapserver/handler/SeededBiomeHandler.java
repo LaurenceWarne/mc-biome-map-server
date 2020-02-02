@@ -18,6 +18,8 @@ public class SeededBiomeHandler extends BiomeAtCoordinateRequestHandler {
 
     @NonNull @Getter @Setter
     private WorldProvider worldProvider;    
+    @NonNull @Getter @Setter
+    private String defaultProfile;
 
     @Override
     protected World getWorld(@NonNull Href href) {
@@ -32,7 +34,10 @@ public class SeededBiomeHandler extends BiomeAtCoordinateRequestHandler {
 	    throw new IllegalArgumentException("Passed seed parameter is not numeric");
 	}
 	try {
-	    return worldProvider.getWorld("1.13.2", seed);
+	    return worldProvider.getWorld(
+		Iterables.getFirst(href.param("profile"), defaultProfile),
+		seed
+	    );
 	} catch (Exception e) {
 	    throw new IllegalStateException("Error initialising amidst: " + e.getMessage());
 	}
