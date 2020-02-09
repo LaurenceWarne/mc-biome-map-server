@@ -7,6 +7,7 @@ import org.takes.facets.fork.FkRegex;
 import org.takes.facets.fork.TkFork;
 import org.takes.http.FtBasic;
 
+import laurencewarne.mcbiomemapserver.handler.FromSaveBiomeHandler;
 import laurencewarne.mcbiomemapserver.handler.SeededBiomeHandler;
 import laurencewarne.mcbiomemapserver.minecraft.WorldProvider;
 import lombok.NonNull;
@@ -22,9 +23,13 @@ public class McBiomeMapServerInitializer {
 	final Take seededBiomeHandler = new SeededBiomeHandler(
 	    worldProvider, defaultProfile
 	);
+	final Take fromSaveBiomeHandler = new FromSaveBiomeHandler(
+	    worldProvider, defaultProfile
+	);	
 	return new FtBasic(
 	    new TkFork(
 		new FkRegex("/biome/seed", seededBiomeHandler),
+		new FkRegex("/biome/save", fromSaveBiomeHandler),
 		new FkRegex("/", "Hello world")
 	    ), port
 	);

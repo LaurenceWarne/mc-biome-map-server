@@ -31,7 +31,7 @@ public class WorldProvider {
     private final MinecraftInstallation mcInstallation;
     /**Acts as a cache so we don't have to keep reloading the same mc world.*/
     @NonNull
-    private final Table<Integer, String,  World> mcWorldLookup = HashBasedTable.create();
+    private final Table<Long, String,  World> mcWorldLookup = HashBasedTable.create();
 
     /**
      * Create a new WorldProvider object using the minecraft installation at the
@@ -47,7 +47,7 @@ public class WorldProvider {
 	    newLocalMinecraftInstallation(mcInstallationLocation);
     }
  
-    public World getWorld(@NonNull final String launcherProfileName, final int seed)
+    public World getWorld(@NonNull final String launcherProfileName, final long seed)
 	throws MinecraftInterfaceCreationException,
 	       MinecraftInterfaceException,
 	       FormatException,
