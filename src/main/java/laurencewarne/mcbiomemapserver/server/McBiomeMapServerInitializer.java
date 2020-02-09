@@ -13,7 +13,10 @@ import lombok.NonNull;
 
 public class McBiomeMapServerInitializer {
 
-    public FtBasic initServer(@NonNull final String mcInstallLocation) throws IOException {
+    public FtBasic initServer(
+	@NonNull final String mcInstallLocation,
+	final int port
+    ) throws IOException {
 	final WorldProvider worldProvider = new WorldProvider(mcInstallLocation);
 	final String defaultProfile = "1.13.2";
 	final Take seededBiomeHandler = new SeededBiomeHandler(
@@ -23,7 +26,7 @@ public class McBiomeMapServerInitializer {
 	    new TkFork(
 		new FkRegex("/biome/seed", seededBiomeHandler),
 		new FkRegex("/", "Hello world")
-	    ), 8080
+	    ), port
 	);
     }    
 }
