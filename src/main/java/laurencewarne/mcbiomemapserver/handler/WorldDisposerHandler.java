@@ -19,16 +19,18 @@ import amidst.mojangapi.file.service.SaveDirectoryService;
 import laurencewarne.mcbiomemapserver.minecraft.WorldProvider;
 import lombok.Getter;
 import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
+@RequiredArgsConstructor
 public class WorldDisposerHandler implements Take {
 
     @NonNull @Getter @Setter
     private WorldProvider worldProvider;        
-    @NonNull
-    private SaveDirectoryService saveDirectoryService = new SaveDirectoryService();    
     @NonNull @Getter @Setter
     private String defaultProfile;
+    @NonNull
+    private SaveDirectoryService saveDirectoryService = new SaveDirectoryService();    
 
     @Override
     public Response act(@NonNull final Request request) throws IOException {
