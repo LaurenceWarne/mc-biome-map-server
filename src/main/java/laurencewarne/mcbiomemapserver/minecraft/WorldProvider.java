@@ -69,6 +69,19 @@ public class WorldProvider {
 	    mcWorldLookup.put(seed, launcherProfileName, mcWorld);
 	}
 	return mcWorldLookup.get(seed, launcherProfileName);
+    }
 
+    /**
+     * Remove a Minecraft world from this object's storage.
+     *
+     * @param launcherProfileName launcher associated with the world.
+     * @param seed the world seed.
+     */
+    public void disposeWorld(@NonNull final String launcherProfileName, final long seed) {
+	if (mcWorldLookup.contains(seed, launcherProfileName)) {
+	    final World world =  mcWorldLookup.get(seed, launcherProfileName);
+	    world.dispose();
+	    mcWorldLookup.remove(seed, launcherProfileName);
+	}
     }
 }
