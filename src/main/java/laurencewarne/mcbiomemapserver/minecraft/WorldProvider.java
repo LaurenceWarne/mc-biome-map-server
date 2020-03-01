@@ -1,5 +1,6 @@
 package laurencewarne.mcbiomemapserver.minecraft;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.function.Consumer;
 
@@ -44,7 +45,7 @@ public class WorldProvider {
     public WorldProvider(@NonNull final String mcInstallationLocation)
 	throws DotMinecraftDirectoryNotFoundException {
 	mcInstallation = MinecraftInstallation.
-	    newLocalMinecraftInstallation(mcInstallationLocation);
+	    newLocalMinecraftInstallation(new File(mcInstallationLocation));
     }
  
     public World getWorld(@NonNull final String launcherProfileName, final long seed)
