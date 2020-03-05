@@ -64,7 +64,7 @@ public class WorldProvider {
 	    );
 	    final Consumer<World> onDispose = world -> {};
 	    final WorldOptions worldOptions = new WorldOptions(
-		WorldSeed.random(), WorldType.DEFAULT
+		WorldSeed.fromSaveGame(seed), WorldType.DEFAULT
 	    );	
 	    final World mcWorld = mcWorldBuilder.from(mcInterface, onDispose, worldOptions);
 	    mcWorldLookup.put(seed, launcherProfileName, mcWorld);
