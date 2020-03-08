@@ -26,8 +26,10 @@ import lombok.RequiredArgsConstructor;
  */
 public abstract class BiomeAtCoordinateRequestHandler implements Take {
 
+    @NonNull @Getter
     private String notEnoughParamsMsg = "Not enough parameters detected, ensure that" +
 	" all of chunkStartX, chunkStartY, chunkEndX, chunkEndY are specified.";
+    @NonNull @Getter
     private String badParamsMsg = "Not all of the parameters are of the correct " +
 	"type, ensure that all of chunkStartX, chunkStartY, chunkEndX, chunkEndY " +
 	"are given as integers.";
