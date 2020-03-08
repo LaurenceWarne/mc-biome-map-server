@@ -17,6 +17,7 @@ import org.takes.misc.Href;
 import org.takes.rq.RqFake;
 import org.takes.rs.RsPrint;
 
+import amidst.mojangapi.minecraftinterface.MinecraftInterfaceException;
 import amidst.mojangapi.world.World;
 import amidst.mojangapi.world.biome.Biome;
 import amidst.mojangapi.world.oracle.BiomeDataOracle;
@@ -52,7 +53,6 @@ public class BiomeAtCoordinateRequestHandlerTest {
 	final Request request = new RqFake(
 	    "GET", "/?chunkStartX=3&chunkStartY=4&chunkEndX=10&chunkEndY=10"
 	);
-	System.out.println(new RsPrint(handler.act(request)).printBody());
 	assertTrue(
 	    !removeXmlDeclaration(
 		new RsPrint(handler.act(request)).printBody()	
@@ -83,6 +83,32 @@ public class BiomeAtCoordinateRequestHandlerTest {
 	);
     }
 
+    @Test
+    public void testErrorXmlReturnedOnNonNumericParams() throws IOException{
+	final Request request = new RqFake(
+	    "GET", "/?chunkStartX=NotANumber&chunkStartY=4&chunkEndX=10"
+	);
+	assertEquals(
+	    "<root><error>" + handler.getBadParamsMsg() + "</error></root>",
+	    removeXmlDeclaration(
+		new RsPrint(handler.act(request)).printBody()	
+	    )
+	);
+    }
+
+    @Test
+    public void testErrorXmlReturnedOnBiomeDataError() throws Exception {
+	when(biomeDataOracle.getBiomeAtMiddleOfChunk(anyInt(), anyInt()))
+	    .thenThrow(new MinecraftInterfaceException("test"));  // any error will do
+	final Request request = new RqFake(
+	    "GET", "/?chunkStartX=3&chunkStartY=4&chunkEndX=10&chunkEndY=10"
+	);
+	assertTrue(
+	    removeXmlDeclaration(
+		new RsPrint(handler.act(request)).printBody()	
+	    ).contains(handler.getAmidstErrorMsg())
+	);
+    }
 
     private static String removeXmlDeclaration(String xml) {
 	return xml.replaceAll("\\<\\?xml(.+?)\\?\\>", "").trim();

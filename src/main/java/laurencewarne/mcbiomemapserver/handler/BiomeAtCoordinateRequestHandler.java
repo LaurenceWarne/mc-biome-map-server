@@ -33,6 +33,8 @@ public abstract class BiomeAtCoordinateRequestHandler implements Take {
     private String badParamsMsg = "Not all of the parameters are of the correct " +
 	"type, ensure that all of chunkStartX, chunkStartY, chunkEndX, chunkEndY " +
 	"are given as integers.";
+    @NonNull @Getter
+    private String amidstErrorMsg = "Error finding biomes: ";
 
     protected abstract World getWorld( @NonNull final Href href );
 
@@ -64,7 +66,7 @@ public abstract class BiomeAtCoordinateRequestHandler implements Take {
 	    
 	} catch (Exception e) {
 	    return new RsXembly(
-		new XmlError("Error finding biomes: '" + e.getMessage() + "'").xml()
+		new XmlError(amidstErrorMsg + "'" + e.getMessage() + "'").xml()
 	    );
 	}
     }
