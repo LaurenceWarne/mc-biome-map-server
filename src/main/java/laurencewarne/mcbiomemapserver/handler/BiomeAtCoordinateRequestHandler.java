@@ -10,14 +10,15 @@ import org.takes.Response;
 import org.takes.Take;
 import org.takes.misc.Href;
 import org.takes.rq.RqHref;
-import org.takes.rs.RsHtml;
 import org.takes.rs.xe.RsXembly;
 import org.takes.rs.xe.XeDirectives;
 import org.xembly.Directives;
 
 import amidst.mojangapi.world.World;
 import laurencewarne.mcbiomemapserver.minecraft.ChunkToBiomeTable;
+import lombok.Getter;
 import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
 /**
  * Processes a request for the biome type at a set of chunk coordinates and sends the
@@ -25,9 +26,11 @@ import lombok.NonNull;
  */
 public abstract class BiomeAtCoordinateRequestHandler implements Take {
 
-    private XeDirectives errorDirective = new XeDirectives(
-	new Directives().add("root").add("error")
-    );
+    private String notEnoughParamsMsg = "Not enough parameters detected, ensure that" +
+	" all of chunkStartX, chunkStartY, chunkEndX, chunkEndY are specified.";
+    private String badParamsMsg = "Not all of the parameters are of the correct " +
+	"type, ensure that all of chunkStartX, chunkStartY, chunkEndX, chunkEndY " +
+	"are given as integers.";
 
     protected abstract World getWorld( @NonNull final Href href );
 
@@ -42,10 +45,10 @@ public abstract class BiomeAtCoordinateRequestHandler implements Take {
 	    chunkYEnd = Integer.parseInt(Iterables.getOnlyElement(href.param("chunkEndY")));
 	}
 	catch (NoSuchElementException e) {
-	    return new RsXembly(errorDirective);
+	    return new RsXembly(new XmlError(notEnoughParamsMsg).xml());
 	}
 	catch (NumberFormatException e) {
-	    return new RsXembly(errorDirective);	    
+	    return new RsXembly(new XmlError(badParamsMsg).xml());
 	}
 	try {
 	    World world = getWorld(href);
@@ -58,7 +61,22 @@ public abstract class BiomeAtCoordinateRequestHandler implements Take {
 	    return new RsXembly(table.toXML());
 	    
 	} catch (Exception e) {
-	    return new RsHtml(e.getMessage());
+	    return new RsXembly(
+		new XmlError("Error finding biomes: '" + e.getMessage() + "'").xml()
+	    );
+	}
+    }
+
+    @RequiredArgsConstructor
+    public static class XmlError {
+
+	@NonNull @Getter
+	private final String msg;
+
+	public XeDirectives xml() {
+	    return new XeDirectives(
+		new Directives().add("root").add("error").set(msg)
+	    );
 	}
     }
 }
