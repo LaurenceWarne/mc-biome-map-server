@@ -81,8 +81,9 @@ public class WorldProvider {
     public void disposeWorld(@NonNull final String launcherProfileName, final long seed) {
 	if (mcWorldLookup.contains(seed, launcherProfileName)) {
 	    final World world =  mcWorldLookup.get(seed, launcherProfileName);
-	    world.dispose();
 	    mcWorldLookup.remove(seed, launcherProfileName);
+	    world.dispose();
+	    
 	}
     }
 }
