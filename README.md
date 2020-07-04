@@ -1,6 +1,4 @@
 # MC Biome Map Server
-[![Build Status](https://travis-ci.org/LaurenceWarne/mc-biome-map-server.svg?branch=master)](https://travis-ci.org/LaurenceWarne/mc-biome-map-server)
-
 
 A HTTP server for finding info on minecraft biomes. Runs using [Amidst](https://github.com/toolbox4minecraft/amidst).
 
