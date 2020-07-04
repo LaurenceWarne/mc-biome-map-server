@@ -44,7 +44,7 @@ public class WorldDisposerHandler implements Take {
 	    // try to get a save now
 	    try {
 		final SaveDirectory dir = saveDirectoryService.newSaveDirectory(
-		    new File(Iterables.getOnlyElement(href.param("save")))
+		    (new File(Iterables.getOnlyElement(href.param("save")))).toPath()
 		);
 		final SaveGame game = new SaveGame(dir, saveDirectoryService.readLevelDat(dir));
 		seed = game.getSeed();

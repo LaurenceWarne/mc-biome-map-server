@@ -45,7 +45,7 @@ public class WorldProvider {
     public WorldProvider(@NonNull final String mcInstallationLocation)
 	throws DotMinecraftDirectoryNotFoundException {
 	mcInstallation = MinecraftInstallation.
-	    newLocalMinecraftInstallation(new File(mcInstallationLocation));
+	    newLocalMinecraftInstallation((new File(mcInstallationLocation)).toPath());
     }
  
     public World getWorld(@NonNull final String launcherProfileName, final long seed)
@@ -62,11 +62,10 @@ public class WorldProvider {
 	    final MinecraftInterface mcInterface = MinecraftInterfaces.fromLocalProfile(
 		launcherProfile
 	    );
-	    final Consumer<World> onDispose = world -> {};
 	    final WorldOptions worldOptions = new WorldOptions(
 		WorldSeed.fromSaveGame(seed), WorldType.DEFAULT
 	    );	
-	    final World mcWorld = mcWorldBuilder.from(mcInterface, onDispose, worldOptions);
+	    final World mcWorld = mcWorldBuilder.from(mcInterface, worldOptions);
 	    mcWorldLookup.put(seed, launcherProfileName, mcWorld);
 	}
 	return mcWorldLookup.get(seed, launcherProfileName);
@@ -82,8 +81,6 @@ public class WorldProvider {
 	if (mcWorldLookup.contains(seed, launcherProfileName)) {
 	    final World world =  mcWorldLookup.get(seed, launcherProfileName);
 	    mcWorldLookup.remove(seed, launcherProfileName);
-	    world.dispose();
-	    
 	}
     }
 }

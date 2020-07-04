@@ -31,7 +31,7 @@ public class FromSaveBiomeHandler extends BiomeAtCoordinateRequestHandler {
 	final SaveGame game;
 	try {
 	    final SaveDirectory dir = saveDirectoryService.newSaveDirectory(
-		new File(Iterables.getOnlyElement(href.param("save")))
+		(new File(Iterables.getOnlyElement(href.param("save")))).toPath()
 	    );
 	    game = new SaveGame(dir, saveDirectoryService.readLevelDat(dir));
 	} catch (Exception e) {

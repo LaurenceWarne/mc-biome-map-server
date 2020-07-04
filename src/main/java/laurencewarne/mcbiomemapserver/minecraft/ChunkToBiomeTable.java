@@ -28,7 +28,7 @@ public class ChunkToBiomeTable extends ForwardingTable<Integer, Integer, Biome> 
 	    directives.add("x").set(chunk.getColumnKey()).up();
 	    directives.add("y").set(chunk.getRowKey()).up();
 	    directives.add("biome").set(chunk.getValue().getName())
-		.attr("id", chunk.getValue().getIndex()).up().up();
+		.attr("id", chunk.getValue().getId()).up().up();
 	}
 	return new XeDirectives(directives);
     }

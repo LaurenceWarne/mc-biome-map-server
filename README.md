@@ -6,8 +6,8 @@ A HTTP server for finding info on minecraft biomes. Runs using [Amidst](https://
 
 | uri            | Description                        | Parameters                                           |
 | -------------  | -------------                      | -----                                                |
-| /biome/seed    | Get biome information from a seed  | chunkStartX, chunkStartY, chunkEndX, chunkEndY, seed |
-| /biome/save    | Get biome information from a save  | chunkStartX, chunkStartY, chunkEndX, chunkEndY, save |
+| /biome/seed    | Get biome information from a seed  | profile, chunkStartX, chunkStartY, chunkEndX, chunkEndY, seed |
+| /biome/save    | Get biome information from a save  | profile, chunkStartX, chunkStartY, chunkEndX, chunkEndY, save |
 | /world/dispose | Dispose of a world, freeing memory | seed or save                                         |
 
 ## Command Line Arguments
