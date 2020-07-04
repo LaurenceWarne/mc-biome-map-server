@@ -10,6 +10,7 @@ plugins {
     id 'java'
     id 'application'
     id "io.freefair.lombok" version "4.1.6"
+    id 'com.github.johnrengelman.shadow' version '5.2.0'
 }
 
 repositories {
@@ -34,7 +35,15 @@ dependencies {
     testImplementation 'org.mockito:mockito-core:3.2.4'
 }
 
-application {
-    // Define the main class for the application
-    mainClassName = 'laurencewarne.mcbiomemapserver.App'
+mainClassName = 'laurencewarne.mcbiomemapserver.App'
+
+task dist(type: Jar) {
+    from sourceSets.main.output.classesDirs
+    from sourceSets.main.output.resourcesDir
+    from {configurations.implementation.collect {
+	it.isDirectory() ? it : zipTree(it)
+    }}
+    manifest {
+        attributes 'Main-Class': project.mainClassName
+    }
 }
