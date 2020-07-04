@@ -30,9 +30,9 @@ public class ChunkToBiomeTableTest {
 	when(b1.getName()).thenReturn("biome1");
 	when(b2.getName()).thenReturn("biome2");
 	when(b3.getName()).thenReturn("biome3");
-	when(b1.getIndex()).thenReturn(1);
-	when(b2.getIndex()).thenReturn(2);
-	when(b3.getIndex()).thenReturn(3);
+	when(b1.getId()).thenReturn(1);
+	when(b2.getId()).thenReturn(2);
+	when(b3.getId()).thenReturn(3);
     }
 
     @Test

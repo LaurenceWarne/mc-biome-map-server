@@ -1,7 +1,6 @@
 package laurencewarne.mcbiomemapserver.minecraft;
 
 import java.io.File;
-import java.util.function.Consumer;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -23,7 +22,7 @@ public class WorldProviderTest {
     @Before
     public void setUp() throws Exception {
 	mcInstallation = MinecraftInstallation.
-	    newLocalMinecraftInstallation(new File("~/.minecraft"));
+	    newLocalMinecraftInstallation((new File("~/.minecraft")).toPath());
     }
 
     @Test
@@ -33,11 +32,10 @@ public class WorldProviderTest {
 	final MinecraftInterface mcInterface = MinecraftInterfaces.fromLocalProfile(
 	    launcherProfile
 	);
-	final Consumer<World> onDispose = world -> {};
 	final WorldOptions worldOptions = new WorldOptions(
 	    WorldSeed.fromSaveGame(3), WorldType.DEFAULT
 	);	
-	final World mcWorld = mcWorldBuilder.from(mcInterface, onDispose, worldOptions);
+	final World mcWorld = mcWorldBuilder.from(mcInterface, worldOptions);
     }
 
 }
