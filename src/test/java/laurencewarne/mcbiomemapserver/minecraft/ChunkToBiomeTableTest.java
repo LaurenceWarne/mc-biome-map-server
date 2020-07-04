@@ -1,6 +1,7 @@
 package laurencewarne.mcbiomemapserver.minecraft;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.when;
 
 import java.io.IOException;
@@ -58,7 +59,6 @@ public class ChunkToBiomeTableTest {
 	assertThat(removeXmlDeclaration(xml.xmlQuietly())).isXmlEqualTo(
 	    "<root><chunk><x>0</x><y>0</y><biome id='1'>biome1</biome></chunk>" +
 	    "<chunk><x>4</x><y>-9</y><biome id='2'>biome2</biome></chunk></root>"
-	);	
+	);
     }
-
 }
